@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "BhYvSS6w2aL7W1pN8z_6b"
+uri = "file://DEPLOY_TO_VERCEL.md"
+type = "text"
+title = "Vercel Deployment Guide — Kute Hospital"
