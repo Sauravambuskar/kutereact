@@ -1,8 +1,8 @@
-import React from "react";
 import { motion } from "framer-motion";
-import { Activity, ShieldCheck, HeartPulse, Stethoscope, Users, PhoneCall, CheckCircle2 } from "lucide-react";
+import { Activity, ShieldCheck, HeartPulse, Stethoscope, Users, PhoneCall, CheckCircle2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { Card } from "@/components/ui/card";
 
 export default function Services() {
   const fadeIn = {
@@ -17,7 +17,8 @@ export default function Services() {
       title: "Laparoscopy & Surgery Centre",
       description: "Advanced minimally invasive surgical procedures that ensure smaller incisions, less pain, and faster recovery times. Our state-of-the-art OT is equipped for complex laparoscopic interventions.",
       features: ["Gallbladder Surgery", "Hernia Repair", "Appendectomy", "Diagnostic Laparoscopy"],
-      image: "https://www.kutehospital.com/wp-content/uploads/2026/02/Screenshot-351-1024x576.png"
+      image: "https://www.kutehospital.com/wp-content/uploads/2026/02/Screenshot-351-1024x576.png",
+      href: "/services/laparoscopy"
     },
     {
       id: "orthopaedic",
@@ -25,7 +26,8 @@ export default function Services() {
       title: "Orthopaedic Care",
       description: "Comprehensive diagnosis and treatment for all musculoskeletal conditions. From trauma care to joint replacements, our experts ensure you get back to your active lifestyle safely.",
       features: ["Fracture Management", "Joint Replacement", "Sports Injuries", "Spine Care"],
-      image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=1000"
+      image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=1000",
+      href: "/services/orthopaedic"
     },
     {
       id: "oncology",
@@ -33,7 +35,8 @@ export default function Services() {
       title: "Cancer Care & Oncology",
       description: "Compassionate, multidisciplinary approach to cancer diagnosis and treatment. We provide personalized care plans guided by the latest oncological protocols.",
       features: ["Cancer Screening", "Surgical Oncology", "Chemotherapy Support", "Palliative Care"],
-      image: "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?auto=format&fit=crop&q=80&w=1000"
+      image: "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?auto=format&fit=crop&q=80&w=1000",
+      href: "/services/oncology"
     },
     {
       id: "super-speciality",
@@ -41,7 +44,8 @@ export default function Services() {
       title: "Super Speciality Care",
       description: "Expert consultations across a wide range of medical super-specialities, bringing highly qualified visiting consultants to Sangamner.",
       features: ["Cardiology", "Neurology", "Urology", "Gastroenterology"],
-      image: "https://www.kutehospital.com/wp-content/uploads/2026/02/Screenshot-348-1024x576.png"
+      image: "https://www.kutehospital.com/wp-content/uploads/2026/02/Screenshot-348-1024x576.png",
+      href: "/services/super-speciality"
     },
     {
       id: "icu",
@@ -49,7 +53,8 @@ export default function Services() {
       title: "ICU & Critical Care",
       description: "Our 24/7 Intensive Care Unit is equipped with advanced life-support systems and continuous monitoring, staffed by specially trained critical care personnel.",
       features: ["24/7 Monitoring", "Ventilator Support", "Trained Intensivists", "Emergency Resuscitation"],
-      image: "https://www.kutehospital.com/wp-content/uploads/2026/02/Screenshot-349-1024x576.png"
+      image: "https://www.kutehospital.com/wp-content/uploads/2026/02/Screenshot-349-1024x576.png",
+      href: "/services/icu"
     },
     {
       id: "pathology",
@@ -57,7 +62,8 @@ export default function Services() {
       title: "Pathology Lab",
       description: "Accurate and rapid diagnostics are the cornerstone of effective treatment. Our fully automated in-house pathology lab ensures reliable results.",
       features: ["Blood & Urine Tests", "Histopathology", "Microbiology", "Quick Reporting"],
-      image: "https://www.kutehospital.com/wp-content/uploads/2026/02/Screenshot-352-1024x576.png"
+      image: "https://www.kutehospital.com/wp-content/uploads/2026/02/Screenshot-352-1024x576.png",
+      href: "/services/pathology"
     }
   ];
 
@@ -84,45 +90,56 @@ export default function Services() {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
           {services.map((service, index) => (
-            <div key={service.id} className={`flex flex-col ${index % 2 === 1 ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-12 lg:gap-20 items-center`}>
-              <motion.div 
-                initial={{ opacity: 0, x: index % 2 === 1 ? 30 : -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="lg:w-1/2 w-full"
-              >
-                <div className="relative rounded-2xl overflow-hidden shadow-xl aspect-video">
-                  <img 
-                    src={service.image} 
-                    alt={service.title} 
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur p-3 rounded-xl shadow-lg">
-                    <service.icon className="h-6 w-6 text-primary" />
+            <Card key={service.id} className="border-none shadow-none bg-transparent">
+              <div className={`flex flex-col ${index % 2 === 1 ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-12 lg:gap-20 items-center group`}>
+                <motion.div 
+                  initial={{ opacity: 0, x: index % 2 === 1 ? 30 : -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  className="lg:w-1/2 w-full"
+                >
+                  <Link href={service.href}>
+                    <div className="relative rounded-2xl overflow-hidden shadow-xl aspect-video cursor-pointer hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
+                      <img 
+                        src={service.image} 
+                        alt={service.title} 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                      <div className="absolute top-4 left-4 bg-white/90 backdrop-blur p-3 rounded-xl shadow-lg">
+                        <service.icon className="h-6 w-6 text-primary" />
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+                
+                <motion.div 
+                  initial={{ opacity: 0, x: index % 2 === 1 ? -30 : 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  className="lg:w-1/2 space-y-6"
+                >
+                  <h2 className="text-3xl font-bold text-foreground">{service.title}</h2>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    {service.description}
+                  </p>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    {service.features.map((feature, i) => (
+                      <li key={i} className="flex items-center gap-3 text-foreground font-medium">
+                        <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="pt-4">
+                    <Link href={service.href}>
+                      <Button className="hover:scale-[1.02] transition-transform">
+                        View Details <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
                   </div>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                initial={{ opacity: 0, x: index % 2 === 1 ? -30 : 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="lg:w-1/2 space-y-6"
-              >
-                <h2 className="text-3xl font-bold text-foreground">{service.title}</h2>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  {service.description}
-                </p>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-                  {service.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-3 text-foreground font-medium">
-                      <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            </div>
+                </motion.div>
+              </div>
+            </Card>
           ))}
         </div>
       </section>
@@ -139,7 +156,7 @@ export default function Services() {
           
           <div className="flex flex-wrap justify-center gap-4 md:gap-8">
             {["Star Health", "United India", "New India Assurance", "HDFC ERGO", "Bajaj Allianz", "ICICI Lombard", "National Insurance"].map((provider, i) => (
-              <div key={i} className="bg-white px-6 py-4 rounded-xl border shadow-sm font-semibold text-foreground/80 flex items-center justify-center min-w-[160px]">
+              <div key={i} className="bg-white px-6 py-4 rounded-xl border shadow-sm font-semibold text-foreground/80 flex items-center justify-center min-w-[160px] hover:-translate-y-1 hover:shadow-md transition-all">
                 {provider}
               </div>
             ))}
@@ -155,7 +172,7 @@ export default function Services() {
             Contact us today to schedule a consultation with our medical experts.
           </p>
           <Link href="/contact">
-            <Button size="lg" variant="secondary" className="text-lg h-14 px-8 rounded-full">
+            <Button size="lg" variant="secondary" className="text-lg h-14 px-8 rounded-full hover:scale-[1.02] transition-transform">
               Book an Appointment
             </Button>
           </Link>

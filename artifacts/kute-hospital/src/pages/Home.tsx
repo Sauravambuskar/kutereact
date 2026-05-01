@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { ArrowRight, Activity, HeartPulse, Stethoscope, ShieldCheck, Users, PhoneCall, Calendar } from "lucide-react";
@@ -65,12 +64,12 @@ export default function Home() {
               className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8"
             >
               <Link href="/contact" className="w-full sm:w-auto">
-                <Button size="lg" className="w-full text-lg h-14 px-8 bg-primary hover:bg-primary/90 text-white rounded-full">
+                <Button size="lg" className="w-full text-lg h-14 px-8 bg-primary hover:bg-primary/90 text-white rounded-full hover:scale-[1.02] transition-transform">
                   Book Appointment <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
               <Link href="/services" className="w-full sm:w-auto">
-                <Button size="lg" variant="outline" className="w-full text-lg h-14 px-8 bg-white/10 hover:bg-white/20 text-white border-white/30 backdrop-blur-sm rounded-full">
+                <Button size="lg" variant="outline" className="w-full text-lg h-14 px-8 bg-white/10 hover:bg-white/20 text-white border-white/30 backdrop-blur-sm rounded-full hover:scale-[1.02] transition-transform">
                   Our Services
                 </Button>
               </Link>
@@ -113,36 +112,41 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { icon: Activity, title: "Laparoscopy & Surgery", desc: "Advanced minimally invasive surgical procedures for faster recovery." },
-              { icon: ShieldCheck, title: "Orthopaedic Care", desc: "Comprehensive treatment for bone, joint, and muscle conditions." },
-              { icon: HeartPulse, title: "Cancer Care & Oncology", desc: "Expert diagnosis and compassionate treatment for various cancers." },
-              { icon: Stethoscope, title: "Super Speciality Care", desc: "Specialized treatment across neurology, cardiology, and more." },
-              { icon: Users, title: "ICU & Critical Care", desc: "24/7 intensive care with advanced monitoring and life support." },
-              { icon: PhoneCall, title: "Pathology Lab", desc: "Accurate diagnostics with state-of-the-art laboratory equipment." }
+              { icon: Activity, title: "Laparoscopy & Surgery", desc: "Advanced minimally invasive surgical procedures for faster recovery.", href: "/services/laparoscopy" },
+              { icon: ShieldCheck, title: "Orthopaedic Care", desc: "Comprehensive treatment for bone, joint, and muscle conditions.", href: "/services/orthopaedic" },
+              { icon: HeartPulse, title: "Cancer Care & Oncology", desc: "Expert diagnosis and compassionate treatment for various cancers.", href: "/services/oncology" },
+              { icon: Stethoscope, title: "Super Speciality Care", desc: "Specialized treatment across neurology, cardiology, and more.", href: "/services/super-speciality" },
+              { icon: Users, title: "ICU & Critical Care", desc: "24/7 intensive care with advanced monitoring and life support.", href: "/services/icu" },
+              { icon: PhoneCall, title: "Pathology Lab", desc: "Accurate diagnostics with state-of-the-art laboratory equipment.", href: "/services/pathology" }
             ].map((service, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-80px" }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="h-full border-none shadow-md hover:shadow-xl transition-all duration-300 group">
-                  <CardContent className="p-8">
-                    <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                      <service.icon className="h-7 w-7 text-primary group-hover:text-white transition-colors" />
-                    </div>
-                    <h3 className="text-xl font-bold mb-3">{service.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{service.desc}</p>
-                  </CardContent>
-                </Card>
+                <Link href={service.href}>
+                  <Card className="h-full border-none shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer">
+                    <CardContent className="p-8">
+                      <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                        <service.icon className="h-7 w-7 text-primary group-hover:text-white transition-colors" />
+                      </div>
+                      <h3 className="text-xl font-bold mb-3">{service.title}</h3>
+                      <p className="text-muted-foreground leading-relaxed mb-4">{service.desc}</p>
+                      <div className="flex items-center text-primary font-medium text-sm">
+                        View Details <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
               </motion.div>
             ))}
           </div>
 
           <div className="text-center mt-12">
             <Link href="/services">
-              <Button variant="outline" size="lg" className="rounded-full">
+              <Button variant="outline" size="lg" className="rounded-full hover:scale-[1.02] transition-transform">
                 View All Services <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
@@ -157,7 +161,7 @@ export default function Home() {
             <motion.div 
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-80px" }}
               className="lg:w-1/2 relative"
             >
               <div className="absolute -inset-4 bg-primary/5 rounded-3xl transform -rotate-3 z-0"></div>
@@ -171,7 +175,7 @@ export default function Home() {
             <motion.div 
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-80px" }}
               className="lg:w-1/2 space-y-6"
             >
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold">
@@ -191,7 +195,7 @@ export default function Home() {
               
               <div className="pt-6">
                 <Link href="/about">
-                  <Button size="lg" className="rounded-full bg-foreground text-background hover:bg-foreground/90">
+                  <Button size="lg" className="rounded-full bg-foreground text-background hover:bg-foreground/90 hover:scale-[1.02] transition-transform">
                     Read Our Story
                   </Button>
                 </Link>
@@ -216,7 +220,7 @@ export default function Home() {
             </div>
             <div className="flex-shrink-0">
               <a href="tel:+918888372225">
-                <Button size="lg" variant="secondary" className="text-xl h-16 px-10 rounded-full font-bold shadow-2xl hover:scale-105 transition-transform bg-white text-primary hover:bg-gray-100">
+                <Button size="lg" variant="secondary" className="text-xl h-16 px-10 rounded-full font-bold shadow-2xl hover:scale-[1.02] transition-transform bg-white text-primary hover:bg-gray-100">
                   Call: +91 88883 72225
                 </Button>
               </a>

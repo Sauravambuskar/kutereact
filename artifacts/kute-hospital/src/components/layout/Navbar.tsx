@@ -1,20 +1,62 @@
 import React from "react";
 import { Link, useLocation } from "wouter";
-import { Cross, Menu, X, Phone, Clock } from "lucide-react";
+import { Cross, Menu, X, Phone, Clock, Activity, ShieldCheck, HeartPulse, Stethoscope, Users, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
+
+const servicesList = [
+  { title: "Laparoscopy & Surgery", href: "/services/laparoscopy", desc: "Advanced minimally invasive procedures.", icon: Activity },
+  { title: "Orthopaedic Care", href: "/services/orthopaedic", desc: "Treatment for bones, joints & muscles.", icon: ShieldCheck },
+  { title: "Cancer Care & Oncology", href: "/services/oncology", desc: "Compassionate cancer treatments.", icon: HeartPulse },
+  { title: "Super Speciality", href: "/services/super-speciality", desc: "Expert care across specialities.", icon: Stethoscope },
+  { title: "ICU & Critical Care", href: "/services/icu", desc: "24/7 advanced life support.", icon: Users },
+  { title: "Pathology Lab", href: "/services/pathology", desc: "Accurate & rapid diagnostics.", icon: PhoneCall },
+];
+
+const ListItem = React.forwardRef<
+  React.ElementRef<typeof Link>,
+  React.ComponentPropsWithoutRef<typeof Link> & { title: string; desc: string; icon: any }
+>(({ className, title, desc, icon: Icon, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <Link
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="flex items-center gap-3">
+            <div className="bg-primary/10 p-2 rounded-md">
+              <Icon className="h-4 w-4 text-primary" />
+            </div>
+            <div>
+              <div className="text-sm font-medium leading-none mb-1">{title}</div>
+              <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                {desc}
+              </p>
+            </div>
+          </div>
+        </Link>
+      </NavigationMenuLink>
+    </li>
+  )
+})
+ListItem.displayName = "ListItem"
 
 export function Navbar() {
   const [location] = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-
-  const links = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About Us" },
-    { href: "/services", label: "Services" },
-    { href: "/doctors", label: "Our Doctors" },
-    { href: "/patients", label: "For Patients" },
-    { href: "/contact", label: "Contact" },
-  ];
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b shadow-sm">
@@ -43,24 +85,97 @@ export function Navbar() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1 lg:space-x-4">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors hover:text-primary ${
-                  location === link.href ? "text-primary bg-primary/5" : "text-muted-foreground"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+          <div className="hidden md:flex items-center">
+            <NavigationMenu>
+              <NavigationMenuList className="space-x-1 lg:space-x-2">
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      href="/"
+                      className={`group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50 ${
+                        location === "/" ? "text-primary" : ""
+                      }`}
+                    >
+                      Home
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+                
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      href="/about"
+                      className={`group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50 ${
+                        location === "/about" ? "text-primary" : ""
+                      }`}
+                    >
+                      About Us
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className={`bg-transparent ${location.startsWith("/services") ? "text-primary" : ""}`}>
+                    Services
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-white">
+                      {servicesList.map((service) => (
+                        <ListItem
+                          key={service.href}
+                          href={service.href}
+                          title={service.title}
+                          desc={service.desc}
+                          icon={service.icon}
+                        />
+                      ))}
+                      <li className="col-span-full mt-2 pt-2 border-t text-center">
+                        <NavigationMenuLink asChild>
+                          <Link href="/services" className="text-sm font-medium text-primary hover:underline">
+                            View All Services →
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      href="/doctors"
+                      className={`group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50 ${
+                        location === "/doctors" ? "text-primary" : ""
+                      }`}
+                    >
+                      Our Doctors
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      href="/patients"
+                      className={`group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50 ${
+                        location === "/patients" ? "text-primary" : ""
+                      }`}
+                    >
+                      For Patients
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+
             <div className="pl-4 border-l ml-4">
-              <Link href="/contact" className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                Book Appointment
+              <Link href="/contact">
+                <Button className="hover:scale-[1.02] transition-transform">
+                  Book Appointment
+                </Button>
               </Link>
             </div>
-          </nav>
+          </div>
 
           {/* Mobile Menu Button */}
           <div className="flex md:hidden">
@@ -77,9 +192,16 @@ export function Navbar() {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="md:hidden border-t bg-white absolute w-full left-0">
+        <div className="md:hidden border-t bg-white absolute w-full left-0 shadow-lg">
           <div className="space-y-1 px-4 pb-4 pt-2">
-            {links.map((link) => (
+            {[
+              { href: "/", label: "Home" },
+              { href: "/about", label: "About Us" },
+              { href: "/services", label: "Services" },
+              { href: "/doctors", label: "Our Doctors" },
+              { href: "/patients", label: "For Patients" },
+              { href: "/contact", label: "Contact" },
+            ].map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -95,9 +217,10 @@ export function Navbar() {
               <Link
                 href="/contact"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex w-full items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground h-10 px-4 py-2"
               >
-                Book Appointment
+                <Button className="w-full">
+                  Book Appointment
+                </Button>
               </Link>
             </div>
           </div>
