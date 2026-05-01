@@ -100,6 +100,44 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Intro Video Section */}
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7 }}
+            className="text-center max-w-3xl mx-auto mb-12"
+          >
+            <span className="inline-block text-xs font-semibold tracking-widest uppercase text-accent mb-3">Our Story</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">See Kute Hospital in Action</h2>
+            <p className="text-lg text-muted-foreground">
+              A glimpse into our world-class facilities, dedicated team, and the compassionate care we deliver every day.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.97 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl border border-border"
+          >
+            <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+              <iframe
+                src="https://www.youtube.com/embed/sP9eHwJOQIA?rel=0&modestbranding=1&showinfo=0"
+                title="Kute Hospital Introduction"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full"
+                style={{ border: 0 }}
+              />
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Services Section */}
       <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">

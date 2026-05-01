@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "wouter";
-import { Cross, Menu, X, Phone, Clock, Activity, ShieldCheck, HeartPulse, Stethoscope, Users, PhoneCall } from "lucide-react";
+import { Menu, X, Phone, Clock, Activity, ShieldCheck, HeartPulse, Stethoscope, Users, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -76,11 +76,12 @@ export function Navbar() {
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="bg-primary/10 p-2 rounded-lg group-hover:bg-primary/20 transition-colors">
-                <Cross className="h-6 w-6 text-primary" strokeWidth={3} />
-              </div>
-              <span className="text-xl font-bold tracking-tight text-foreground">Kute Hospital</span>
+            <Link href="/" className="flex items-center">
+              <img
+                src="https://www.kutehospital.com/wp-content/uploads/2026/02/Kute-Hospital.png"
+                alt="Kute Hospital"
+                className="h-14 w-auto object-contain"
+              />
             </Link>
           </div>
 
